@@ -13,13 +13,13 @@ The answer, it turns out, is yes.
 
 I wrote a [blog post with more details](https://admcpr.com/2019/10/07/automating-the-patching-of-cascadia-code-to-include-nerd-fonts/) about how this works.
 
-[![Actions Status](https://github.com/adam7/delugia-code/workflows/Generate%20Fonts/badge.svg)](https://github.com/adam7/delugia-code/actions)
+[![Actions Status](https://github.com/rivy/font.cascodia/workflows/Generate%20Fonts/badge.svg)](https://github.com/rivy/font.cascodia/actions)
 
 ### How to use
 
-You can download the patched font from the [Releases page](https://github.com/adam7/delugia-code/releases) of this repo and install them as you would any other font. Once installed the font can be referenced as `Delugia Nerd Font`. So if, for example, you want to use it in Windows Terminal you should add this line to your profiles.json
+You can download the patched font from the [Releases page](https://github.com/rivy/font.cascodia/releases) of this repo and install them as you would any other font. Once installed the font can be referenced as `Cascodia NF`. So if, for example, you want to use it in Windows Terminal you should add this line to your profiles.json
 
-`"fontFace" : "Delugia Nerd Font",`
+`"fontFace" : "Cascodia NF",`
 
 ### Installation with [scoop.sh](https://scoop.sh)
 

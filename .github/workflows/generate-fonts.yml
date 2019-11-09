@@ -1,6 +1,6 @@
 name: Generate Fonts
 
-# spell-checker:ignore Cascadia fontForge configParser PowerLine xargs Delugia progressBars chmod softprops
+# spell-checker:ignore Cascadia Cascodia Delugia PowerLine chmod configParser dbin fontForge progressBars softprops xargs mkdir
 
 on: [push, pull_request]
 
@@ -9,52 +9,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Create all needed build/work directories
+      run: mkdir -p 'build'
     - name: Download latest version of Cascadia
-      run: curl -L https://github.com/microsoft/cascadia-code/releases/latest/download/Cascadia.ttf  --output Cascadia.ttf
+      run: curl -L https://github.com/microsoft/cascadia-code/releases/latest/download/Cascadia.ttf  --output 'build/Cascadia.ttf'
     - name: Install FontForge
       run: |
         sudo add-apt-repository ppa:fontforge/fontforge -y -u ;
         sudo apt-get install fontforge -y ;
     - name: Download Font Patcher
-      run: curl -L https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/font-patcher --output font-patcher
+      run: curl -L https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/font-patcher --output 'build/font-patcher'
     - name: Patch Font Patcher for Ligature Glyphs
-      run: patch -u font-patcher < font-patcher.patch
+      run: patch -u 'build/font-patcher' < dbin/font-patcher.patch
     - name: Download source fonts
       run: |
-        chmod +x download-source-fonts.sh
-        ./download-source-fonts.sh
+        cd build
+        chmod +x ../dbin/download-source-fonts.sh
+        ../dbin/download-source-fonts.sh
     - name: Install PIP
       run: sudo apt install python-pip -y
     - name: Install configparser
       run: pip install configparser
     - name: Build Powerline
       run: |
+        cd 'build'
         fontforge -script font-patcher --powerline --no-progressbars --mono Cascadia.ttf
-        git describe --always | xargs fontforge rename-font --input "Cascadia Code Nerd Font Mono.ttf" \
-                                                            --output "Delugia Nerd Font.ttf" \
-                                                            --name "Delugia Nerd Font" \
+        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Nerd Font Mono.ttf" \
+                                                            --output "Cascodia NF Powerline.ttf" \
+                                                            --name "Cascodia Nerd Font" \
                                                             --version
     - name: Build Complete
       run: |
+        cd 'build'
         fontforge -script font-patcher -c --no-progressbars --mono Cascadia.ttf
-        git describe --always | xargs fontforge rename-font --input "Cascadia Code Nerd Font Complete Mono.ttf" \
-                                                            --output "Delugia Nerd Font Complete.ttf" \
-                                                            --name "Delugia Nerd Font" \
+        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Nerd Font Complete Mono.ttf" \
+                                                            --output "Cascodia NF.ttf" \
+                                                            --name "Cascodia Nerd Font" \
                                                             --version
     - uses: actions/upload-artifact@master
       with:
-        name: Delugia Nerd Font Powerline
-        path: "Delugia Nerd Font.ttf"
+        name: Cascodia Nerd Font Powerline
+        path: "build/Cascodia NF Powerline.ttf"
     - uses: actions/upload-artifact@master
       with:
-        name: Delugia Nerd Font Complete
-        path: "Delugia Nerd Font Complete.ttf"
+        name: Cascodia Nerd Font Complete
+        path: "build/Cascodia NF.ttf"
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
-          Delugia Nerd Font.ttf
-          Delugia Nerd Font Complete.ttf
+          build/Cascodia NF Powerline.ttf
+          build/Cascodia NF.ttf
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

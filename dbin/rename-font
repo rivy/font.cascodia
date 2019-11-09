@@ -13,24 +13,24 @@ parser.add_argument("--version", help="(optional) text to add to the existing ve
 args = parser.parse_args()
 
 # Open the file
-delugia=fontforge.open(args.input)
+font=fontforge.open(args.input)
 
 # Rename the file
-delugia.fontname="{}-Regular".format(args.name).replace(" ", "")
-delugia.familyname=args.name
-delugia.fullname=args.name
-delugia.appendSFNTName("English (US)", "Preferred Family", args.name)
-delugia.appendSFNTName("English (US)", "Compatible Full", args.name)
-delugia.appendSFNTName("English (US)", "UniqueID", "{} Regular".format(args.name))
-delugia.appendSFNTName("English (US)", "Trademark", "")
+font.fontname="{}-Regular".format(args.name).replace(" ", "")
+font.familyname=args.name
+font.fullname=args.name
+font.appendSFNTName("English (US)", "Preferred Family", args.name)
+font.appendSFNTName("English (US)", "Compatible Full", args.name)
+font.appendSFNTName("English (US)", "UniqueID", "{} Regular".format(args.name))
+font.appendSFNTName("English (US)", "Trademark", "")
 
 # The grave accent type is somehow not correctly detected;
 # we want it to be an ordinary character
-delugia["grave"].glyphclass="baseglyph"
+font["grave"].glyphclass="baseglyph"
 
 # Mix our version information in
-delugia.appendSFNTName("English (US)", "Version", args.version)
-delugia.version = args.version
+font.appendSFNTName("English (US)", "Version", args.version)
+font.version = args.version
 
 # Save
-delugia.generate(args.output)
+font.generate(args.output)

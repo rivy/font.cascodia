@@ -1,5 +1,7 @@
 name: Generate Fonts
 
+# spell-checker:ignore Cascadia fontForge configParser PowerLine xargs Delugia progressBars chmod softprops
+
 on: [push, pull_request]
 
 jobs:
@@ -11,8 +13,8 @@ jobs:
       run: curl -L https://github.com/microsoft/cascadia-code/releases/latest/download/Cascadia.ttf  --output Cascadia.ttf
     - name: Install FontForge
       run: |
-        sudo add-apt-repository ppa:fontforge/fontforge -y -u;
-        sudo apt-get install fontforge -y;
+        sudo add-apt-repository ppa:fontforge/fontforge -y -u ;
+        sudo apt-get install fontforge -y ;
     - name: Download Font Patcher
       run: curl -L https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/font-patcher --output font-patcher
     - name: Patch Font Patcher for Ligature Glyphs

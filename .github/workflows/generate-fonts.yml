@@ -11,8 +11,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Create all needed build/work directories
       run: mkdir -p 'build'
-    - name: Download Cascadia font
-      run: curl -L https://github.com/microsoft/cascadia-code/releases/download/v1910.04/Cascadia.ttf  --output 'build/Cascadia.ttf'
+    - name: Download Cascadia fonts
+      run: |
+        curl -L https://github.com/microsoft/cascadia-code/releases/download/v1911.20/Cascadia.ttf  --output 'build/Cascadia.ttf'
+        curl -L https://github.com/microsoft/cascadia-code/releases/download/v1911.20/CascadiaMono.ttf  --output 'build/CascadiaMono.ttf'
     - name: Install FontForge
       run: |
         sudo add-apt-repository ppa:fontforge/fontforge -y -u ;
@@ -34,17 +36,27 @@ jobs:
       run: |
         cd 'build'
         fontforge -script font-patcher --powerline --no-progressbars --mono Cascadia.ttf
-        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Nerd Font Mono.ttf" \
+        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Regular Nerd Font Mono.ttf" \
                                                             --output "Cascodia NF Powerline.ttf" \
                                                             --name "Cascodia Nerd Font" \
+                                                            --version
+        fontforge -script font-patcher --powerline --no-progressbars --mono CascadiaMono.ttf
+        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Mono Regular Nerd Font Mono.ttf" \
+                                                            --output "Cascodia Mono NF Powerline.ttf" \
+                                                            --name "Cascodia Mono Nerd Font" \
                                                             --version
     - name: Build Complete
       run: |
         cd 'build'
         fontforge -script font-patcher -c --no-progressbars --mono Cascadia.ttf
-        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Nerd Font Complete Mono.ttf" \
+        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Regular Nerd Font Complete Mono.ttf" \
                                                             --output "Cascodia NF.ttf" \
                                                             --name "Cascodia Nerd Font" \
+                                                            --version
+        fontforge -script font-patcher -c --no-progressbars --mono CascadiaMono.ttf
+        git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Mono Regular Nerd Font Complete Mono.ttf" \
+                                                            --output "Cascodia Mono NF.ttf" \
+                                                            --name "Cascodia Mono Nerd Font" \
                                                             --version
     - uses: actions/upload-artifact@master
       with:
@@ -54,6 +66,14 @@ jobs:
       with:
         name: Cascodia Nerd Font Complete
         path: "build/Cascodia NF.ttf"
+    - uses: actions/upload-artifact@master
+      with:
+        name: Cascodia Mono Nerd Font Powerline
+        path: "build/Cascodia Mono NF Powerline.ttf"
+    - uses: actions/upload-artifact@master
+      with:
+        name: Cascodia Mono Nerd Font Complete
+        path: "build/Cascodia Mono NF.ttf"
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/v')
@@ -61,5 +81,7 @@ jobs:
         files: |
           build/Cascodia NF Powerline.ttf
           build/Cascodia NF.ttf
+          build/Cascodia Mono NF Powerline.ttf
+          build/Cascodia Mono NF.ttf
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

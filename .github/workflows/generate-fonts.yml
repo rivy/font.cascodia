@@ -35,7 +35,7 @@ jobs:
     - name: Build Powerline
       run: |
         cd 'build'
-        fontforge -script font-patcher --powerline --no-progressbars --mono Cascadia.ttf
+        fontforge -script font-patcher --careful --powerline --no-progressbars --mono Cascadia.ttf | tee process_powerline.log
         git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Regular Nerd Font Mono.ttf" \
                                                             --output "Cascodia NF Powerline.ttf" \
                                                             --name "Cascodia Nerd Font" \
@@ -48,7 +48,7 @@ jobs:
     - name: Build Complete
       run: |
         cd 'build'
-        fontforge -script font-patcher -c --no-progressbars --mono Cascadia.ttf
+        fontforge -script font-patcher --careful -c --no-progressbars --mono Cascadia.ttf | tee process_complete.log
         git describe --always | xargs fontforge ../dbin/rename-font --input "Cascadia Code Regular Nerd Font Complete Mono.ttf" \
                                                             --output "Cascodia NF.ttf" \
                                                             --name "Cascodia Nerd Font" \
@@ -58,6 +58,9 @@ jobs:
                                                             --output "Cascodia Mono NF.ttf" \
                                                             --name "Cascodia Mono Nerd Font" \
                                                             --version
+    - name: Check for preexisting glyphs
+      run: |
+        grep 'Found existing' process*.log
     - uses: actions/upload-artifact@master
       with:
         name: Cascodia Nerd Font Powerline

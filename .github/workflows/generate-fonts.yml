@@ -13,8 +13,8 @@ jobs:
       run: mkdir -p 'build'
     - name: Download Cascadia fonts
       run: |
-        curl -L https://github.com/microsoft/cascadia-code/releases/download/v1911.20/Cascadia.ttf  --output 'build/Cascadia.ttf'
-        curl -L https://github.com/microsoft/cascadia-code/releases/download/v1911.20/CascadiaMono.ttf  --output 'build/CascadiaMono.ttf'
+        curl -L https://github.com/microsoft/cascadia-code/releases/download/v1911.21/Cascadia.ttf  --output 'build/Cascadia.ttf'
+        curl -L https://github.com/microsoft/cascadia-code/releases/download/v1911.21/CascadiaMono.ttf  --output 'build/CascadiaMono.ttf'
     - name: Install FontForge
       run: |
         sudo add-apt-repository ppa:fontforge/fontforge -y -u ;

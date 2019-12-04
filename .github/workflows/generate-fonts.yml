@@ -58,9 +58,9 @@ jobs:
                                                             --output "Cascodia Mono NF.ttf" \
                                                             --name "Cascodia Mono Nerd Font" \
                                                             --version
-    - name: Check for preexisting glyphs
+    - name: Check for pre-existing glyphs
       run: |
-        grep 'Found existing' process*.log
+        grep --no-messages 'Found existing' process*.log || echo "No pre-existing glyphs found."
     - uses: actions/upload-artifact@master
       with:
         name: Cascodia Nerd Font Powerline

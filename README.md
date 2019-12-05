@@ -11,7 +11,7 @@ Can we add Nerd Fonts to the [Cascadia Code](https://github.com/microsoft/cascad
 
 The answer, it turns out, is yes.
 
-I wrote a [blog post with more details](https://admcpr.com/2019/10/07/automating-the-patching-of-cascadia-code-to-include-nerd-fonts/) about how this works.
+[Adam Cooper](https://github.com/adam7) wrote a [blog post with more details](https://admcpr.com/2019/10/07/automating-the-patching-of-cascadia-code-to-include-nerd-fonts/)[`@`](https://archive.is/b8op3)<!-- {a:.link-archival} --> about how this works.
 
 [![Actions Status](https://github.com/rivy/font.cascodia/workflows/Generate%20Fonts/badge.svg)](https://github.com/rivy/font.cascodia/actions)
 
@@ -20,16 +20,3 @@ I wrote a [blog post with more details](https://admcpr.com/2019/10/07/automating
 You can download the patched font from the [Releases page](https://github.com/rivy/font.cascodia/releases) of this repo and install them as you would any other font. Once installed the font can be referenced as `Cascodia NF`. So if, for example, you want to use it in Windows Terminal you should add this line to your profiles.json
 
 `"fontFace" : "Cascodia NF",`
-
-### Installation with [scoop.sh](https://scoop.sh)
-
-You can use [scoop.sh](https://scoop.sh) to install and update the font. At first install [scoop](https://github.com/lukesampson/scoop) and add extra bucket for [nerd-fonts](https://github.com/matthewjberger/scoop-nerd-fonts):
-
-1) `iwr -useb get.scoop.sh | iex`
-2) `scoop bucket add nerd-fonts`
-3) `scoop install sudo`
-4) `sudo scoop install Delugia-Nerd-Font` or `sudo scoop install Delugia-Nerd-Font-Complete`
-
-### Help!
-
-I know basically nothing about patching fonts so all contributions are welcome.

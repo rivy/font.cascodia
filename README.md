@@ -15,6 +15,8 @@ The answer, it turns out, is yes.
 
 [![Actions Status](https://github.com/rivy/font.cascodia/workflows/Generate%20Fonts/badge.svg)](https://github.com/rivy/font.cascodia/actions)
 
+> Cascadia now [bundles Powerline symbols](https://github.com/microsoft/cascadia-code/issues/10) so you almost definitely don't need to use this. Just grab the PL version from the latest [Cascadia release](https://github.com/microsoft/cascadia-code/releases).
+
 ### How to use
 
 You can download the patched font from the [Releases page](https://github.com/rivy/font.cascodia/releases) of this repo and install them as you would any other font. Once installed the font can be referenced as `Cascodia NF`. So if, for example, you want to use it in Windows Terminal you should add this line to your profiles.json
